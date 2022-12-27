@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t hsrokosatka/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true hsrokosatka/react-test npm test
+
+after_success:
+  - docker build -t hsrokosatka/complex-client ./client
+  - docker build -t hsrokosatka/complex-nginx ./nginx
+  - docker build -t hsrokosatka/complex-server ./server
+  - docker build -t hsrokosatka/complex-worker ./worker
