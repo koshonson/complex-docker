@@ -13,3 +13,10 @@ after_success:
   - docker build -t hsrokosatka/complex-nginx ./nginx
   - docker build -t hsrokosatka/complex-server ./server
   - docker build -t hsrokosatka/complex-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take images and push to docker hub
+  - docker push hsrokosatka/complex-client
+  - docker push hsrokosatka/complex-nginx
+  - docker push hsrokosatka/complex-server
+  - docker push hsrokosatka/complex-worker
